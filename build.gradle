@@ -88,8 +88,8 @@ project(":html") {
 project(":core") {
     apply plugin: "java"
 
-
     dependencies {
+        testCompile 'junit:junit:4.12'
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
     }
 }

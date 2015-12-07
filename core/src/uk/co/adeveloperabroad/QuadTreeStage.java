@@ -105,8 +105,8 @@ public class QuadTreeStage extends Stage {
         }
 
         if (node.objects != null) {
-            for (Particle particle : node.objects) {
-                drawParticle(particle);
+            for (Rectangle particle : node.objects) {
+                drawParticle((Particle) particle);
             }
         }
     }

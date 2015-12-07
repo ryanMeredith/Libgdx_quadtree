@@ -5,11 +5,11 @@ import com.badlogic.gdx.utils.Array;
 
 public class QuadTree {
 
-    private int MAX_OBJECTS = 2;
+    public int MAX_OBJECTS = 2;
     private int MAX_LEVELS = 4;
 
-    private int level;
-    public Array<Particle> objects;
+    public int level;
+    public Array<Rectangle> objects;
     public Rectangle bounds;
     public QuadTree[] nodes;
 
@@ -18,7 +18,7 @@ public class QuadTree {
      */
     public QuadTree(int level, Rectangle bounds) {
         this.level = level;
-        objects = new Array<Particle>();
+        objects = new Array<Rectangle>();
         this.bounds = bounds;
         nodes = new QuadTree[4];
     }
@@ -95,7 +95,7 @@ public class QuadTree {
      * exceeds the capacity, it will split and add all
      * objects to their corresponding nodes.
      */
-    public void insert(Particle pRect) {
+    public void insert(Rectangle pRect) {
         if (nodes[0] != null) {
             int index = getIndex(pRect);
 
@@ -133,6 +133,13 @@ public class QuadTree {
         int index = getIndex(pRect);
         if (index != -1 && nodes[0] != null) {
             nodes[index].retrieve(returnObjects, pRect);
+        }
+
+        // get all objects below this as it doesn't fit (intersects line)
+        if(index == -1 && nodes[0] != null) {
+            for (int i = 0; i < 4; i++) {
+                nodes[i].retrieve(returnObjects, pRect);
+            }
         }
 
         returnObjects.addAll(objects);
